@@ -69,13 +69,14 @@ public class WeatherService {
                    .append("</head><body>")
                    .append("<h1>Wettervorhersage</h1>")
                    .append("<table>")
-                   .append("<tr><th>Date</th><th>Min/Max temperatur</th><th>avg temperatur</th><th>chance of precipitation</th><th>wind velocity</th></tr>");
+                   .append("<tr><th>Date</th><th>Min/Max temperatur</th><th>avg temperatur</th><th>weather description</th><th>chance of precipitation</th><th>wind velocity</th></tr>");
     
         for (String date : groupedData.keySet()) {
             List<WeatherData> dailyData = groupedData.get(date);
             double sumTemp = 0, minTemp = Double.MAX_VALUE, maxTemp = Double.MIN_VALUE;
             double sumWindSpeed = 0, maxChanceOfPrecipitation = 0;
-    
+            Map<String, Integer> weatherDescriptions = new HashMap<>();
+
             for (WeatherData data : dailyData) {
                 double currentTemp = data.getMain().getTemp() - 273.15;
                 sumTemp += currentTemp;
@@ -83,15 +84,19 @@ public class WeatherService {
                 maxTemp = Math.max(maxTemp, data.getMain().getTemp_max() - 273.15);
                 sumWindSpeed += data.getWind().getSpeed();
                 maxChanceOfPrecipitation = Math.max(maxChanceOfPrecipitation, data.getPop() * 100);
+                String weatherDescription = data.getWeather().get(0).getDescription();
+                weatherDescriptions.put(weatherDescription, weatherDescriptions.getOrDefault(weatherDescription, 0) + 1);
             }
     
             double avgTemp = sumTemp / dailyData.size();
             double avgWindSpeed = sumWindSpeed / dailyData.size();
+            String mostCommonWeather = Collections.max(weatherDescriptions.entrySet(), Map.Entry.comparingByValue()).getKey();
     
             htmlContent.append("<tr>")
                        .append("<td>").append(date).append("</td>")
                        .append("<td>").append(String.format("%.2f°C - %.2f°C", minTemp, maxTemp)).append("</td>")
                        .append("<td>").append(String.format("%.2f°C", avgTemp)).append("</td>")
+                       .append("<td>").append(mostCommonWeather).append("</td>")
                        .append("<td>").append(String.format("%.2f%%", maxChanceOfPrecipitation)).append("</td>")
                        .append("<td>").append(String.format("%.2f m/s", avgWindSpeed)).append("</td>")
                        .append("</tr>");
