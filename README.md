@@ -21,29 +21,36 @@ Installation
 Clone the repository:
 
 
-git clone https://github.com/mojeeeb/daily-weather-report.git
+    git clone https://github.com/mojeeeb/daily-weather-report.git
 
 Navigate to the project directory:
 
-    cd [project-directory]
+    cd daily-weather-report
 
 Usage
 
 To run the application using Gradle, execute:
 
 
-./gradlew bootRun
+    ./gradlew bootRun
 
 The application will start on the configured port (default is 8080).
 Configuration
 
-    API Key: Set your OpenWeatherMap API key in the application.properties file:
-
-    properties
+    API Key: Set your OpenWeatherMap API key, gmail sender and
+    password of gmail in the application.properties file:
 
     openweathermap.api.key=YOUR_API_KEY
+    spring.mail.username=SENDER_GAMIL
+    spring.mail.password=PASSWORD_OF_THE_GMAIL
+    
+    Write the sender gmail also in sendEmail methode in the class EmailService
+    helper.setFrom("sender email");
+    
+    Write the reseriver email in the methode sendDailyWeatherEmail
+    emailService.sendEmail("Reseriver email", "Täglicher Wetterbericht", weatherDataHtml);
+    properties
 
-    Email Settings: Configure email settings in application.properties for email functionality.
     Scheduled Tasks: Modify the cron expression in WeatherScheduledTask.java to adjust the email scheduling.
 
 Contributing
