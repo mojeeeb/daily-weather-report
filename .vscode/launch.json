@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WeatherApplication<Weather>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "de.deefinity.Weather.WeatherApplication",
+            "projectName": "Weather",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
