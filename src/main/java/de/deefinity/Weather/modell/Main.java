@@ -2,6 +2,8 @@ package de.deefinity.Weather.modell;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+//indicating that unknown JSON properties are ignored during 
+//deserialization, which is a good practice for resilience against API changes.
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Main {
     private Double temp;
