@@ -47,9 +47,10 @@ Configuration
     Write the sender gmail also in sendEmail methode in the class EmailService
     helper.setFrom("sender email");
     
-    Write the reseriver email in the methode sendDailyWeatherEmail
-    emailService.sendEmail("Reseriver email", "Täglicher Wetterbericht", weatherDataHtml);
-    properties
+    Write the reseriver email in excel file 
+    
+    change the path in the method sendDailyWeatherEmail in the class WeatherScheduledTask
+    List<String> emailAddresses = excelService.readEmailsFromExcel("......./daily-weather-report/excel.xlsx");
 
     Scheduled Tasks: Modify the cron expression in WeatherScheduledTask.java to adjust the email scheduling.
 
